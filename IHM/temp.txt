@@ -1,0 +1,4 @@
+1 - Criar uma pagina web para o controle do veículo
+2 - Implementar o controle do veículo manualmente
+3 - Implementar o controle do veículo automaticamente
+4 - ... ainda tenho que planejar
