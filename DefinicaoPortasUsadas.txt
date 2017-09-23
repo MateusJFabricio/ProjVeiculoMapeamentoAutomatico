@@ -1,0 +1,12 @@
+definir 
+
+porta 22 - Controle PWM Servo motor
+
+sensor 1
+porta 17 - Trigger sensor ultrassonico
+porta 27 - Echo sensor ultrassonico
+
+sensor 2
+porta 18 - Trigger sensor ultrassonico
+porta 23 - Echo sensor ultrassonico
+
