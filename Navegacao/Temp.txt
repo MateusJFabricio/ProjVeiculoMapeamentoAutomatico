@@ -1,0 +1,8 @@
+1 - Criar o controle de movimento do veículo de forma abstraida
+2 - Criar o controle manual
+3 - Implementar o processamento de uma trajetoria
+4 - Criar o controle automatico de acordo com a trajetoria criada
+5 - Implementar a criação automatica de trajetoria do veículo
+6 - Implementar sistema para seguir a rota planejada
+7 - Implementar o controle PID dos motores
+8 - Implementar a leitura do enconder
