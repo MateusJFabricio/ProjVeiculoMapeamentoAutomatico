@@ -1,0 +1,6 @@
+1 - Implementar o controle do sistema de segurança
+2 - Controle da tensão da bateria
+3 - Controle do Bip de alarme
+4 - Comunicação com o banco de dados
+5 - Implementar a configuração do veículo
+6 - Implementar a calibração dos sensores
