@@ -1,0 +1,10 @@
+1 - Controle das informações da bussola
+2 - Controle do posicionamento do veículo no mapa.
+  1.1 - Coordenadas
+  1.2 - Angulo
+3 - Controle dos dados dos sensores ultrassonico
+  3.1 - Retornar a distância do obstáculo.
+  3.2 - Retonar o angulo em que está apontando cada sensor.
+  3.3 - Retornar se a confiabilidade dos dados
+4 - Detector de colisão.
+5 - Manter histórico de dados coletados.
