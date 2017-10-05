@@ -1,12 +1,97 @@
-definir 
+As portas definidas estão no padrão BCM
 
-porta 22 - Controle PWM Servo motor
+########## ------- Definição da utilização das portas do Raspberry PI 3------- ##########
+Servo Motor:
+  Fio laranja [Controle PWM] - Porta 22
+  Fio vermelho [Vcc] - Barramento de 5Vcc
+  Fio Preto [Ground] - Barramento de 0Vcc
 
-sensor 1
-porta 17 - Trigger sensor ultrassonico
-porta 27 - Echo sensor ultrassonico
+Sensor Ultrassonico 1
+  Vcc - Barramento de 5Vcc
+  Ground - Barramento de 0 Vcc
+  Trigger - Porta 17
+  Echo - Porta 27
+  Out - Sem ligação
 
-sensor 2
-porta 18 - Trigger sensor ultrassonico
-porta 23 - Echo sensor ultrassonico
+Sensor Ultrassonico 2
+  Vcc - Barramento de 5Vcc
+  Ground - Barramento de 0 Vcc
+  Trigger - Porta 18
+  Echo - Porta 23
+  Out - Sem ligação
 
+Motor DC - CI - L293D
+  Motor 1
+    Velocidade [Pino 1] - Porta 13 - Obs(Motor parado é velocidade 0)
+    Direção [Pino 2] e [Pino 7] - Porta 5 e Porta 6 - Obs(Motor parado é com nível baixo nas duas portas)
+
+  Motor 2
+    Velocidade [Pino 9] - Porta 19 - Obs(Motor parado é velocidade 0)
+    Direção [Pino 10] e [Pino 15] -  Porta 24 e Porta 25 - Obs(Motor parado é com nível baixo nas duas portas)
+    
+########## ------- RELAÇÃO DAS PORTAS USADAS ------- ##########
+
+    GPIO 4
+    GPIO 17 - Trigger SU 1
+    GPIO 27 - Echo SU 1
+    GPIO 22 - Controle PWM Servo Motor
+    GPIO 5 - Direção Motor Dc 1
+    GPIO 6 - Direção Motor Dc 1
+    GPIO 13 - Velocidade Motor Dc 1
+    GPIO 19 - Velocidade Motor Dc 2
+    GPIO 26
+    GPIO 18 - Trigger SU 2
+    GPIO 23 - Echo SU 2
+    GPIO 24 - Direção Motor Dc 2
+    GPIO 25 - Direção Motor Dc 2
+    GPIO 12
+    GPIO 16
+    GPIO 20
+    GPIO 21
+    
+    
+  
+   
+########## ------- L293D------- ##########
+    Nota: Este CI serve para controle dos motores de tração
+          Pode controlar até dois motores de 600 mAh com pico de 1200 mAh
+
+    --- Descrição dos pinos ---
+      Relativo à alimentação do CI
+        Vs [Pino 8] - Fonte de alimentação externa (Alimentação dos motores)
+        Vss [Pino 16] - Fonte alimentação do Circuito
+      
+      Relativo à alimentação do motor 1
+        GND [Pino 4] - Ground Motor1
+        GND [Pino 5] - Ground Motor1
+        Output 1 [Pino 3] - Saida para o Motor 1
+        Output 2 [Pino 6] - Saida para o Motor 1
+
+      Relativo à alimentação do motor 1
+        GND [Pino 13] - Ground Motor1
+        GND [Pino 12] - Ground Motor1
+        Output 3 [Pino 11] - Saida para o Motor 2
+        Output 4 [Pino 14] - Saida para o Motor 2
+
+      Relativo ao controle do motor 1
+        Enable 1 [Pino 1] - Entrada PWM para o controle da velocidade do motor
+        Input 1 [Pino 2]- Direção do motor
+        Input 2 [Pino 7] - Direção do motor
+
+      Controle do motor 2
+        Enable 2 [Pino 9]- Entrada PWM para o controle da velocidade do motor
+        Input 3 [Pino 10] - Direção do motor
+        Input 4 [15] - Direção do motor 
+
+              _______
+    Enable    |1  16| Vss
+    Input 1   |2  15| Input 4
+    Output 1  |3  14| Output 4
+    GND       |4  13| Gnd
+    GND       |5  12| Gnd
+    Output 2  |6  11| Output 3
+    Input 2   |7  10| Input 3
+    Vs        |8___9| Enable 2
+
+
+    
