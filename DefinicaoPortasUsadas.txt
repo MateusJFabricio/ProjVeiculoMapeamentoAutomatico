@@ -93,7 +93,9 @@ Motor DC - CI - L293D
     Input 2   |7  10| Input 3
     Vs        |8___9| Enable 2
     
- Fonte: http://www.arduinoecia.com.br/2014/04/controle-de-motor-cc-com-o-l293d-ponte-h.html
+ Fonte: 
+  http://www.arduinoecia.com.br/2014/04/controle-de-motor-cc-com-o-l293d-ponte-h.html
+  https://cdn-shop.adafruit.com/datasheets/l293d.pdf
 
 
     
