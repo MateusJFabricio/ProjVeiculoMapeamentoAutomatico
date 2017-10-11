@@ -39,12 +39,12 @@ Motor DC - CI - L293D
     GPIO 6 - Direção Motor Dc 1
     GPIO 13 - Velocidade Motor Dc 1
     GPIO 19 - Velocidade Motor Dc 2
-    GPIO 26
+    GPIO 26 - Encoder Esquerdo
     GPIO 18 - Trigger SU 2
     GPIO 23 - Echo SU 2
     GPIO 24 - Direção Motor Dc 2
     GPIO 25 - Direção Motor Dc 2
-    GPIO 12
+    GPIO 12 - Encoder Direito
     GPIO 16
     GPIO 20
     GPIO 21
