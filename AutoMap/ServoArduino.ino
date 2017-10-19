@@ -1,3 +1,8 @@
+//Programa : Teste MPU6050 e LCD 20x4
+//Alteracoes e adaptacoes : FILIPEFLOP
+//
+//Baseado no programa original de JohnChi
+
 //Carrega a biblioteca Wire
 #include<Wire.h>
 #include <Servo.h> 
@@ -12,16 +17,17 @@ Servo servo;
 char buf;
 int angulo = 90; 
 String Bussola;
+char valorSerial;
 
 //Variaveis para armazenar valores dos sensores
 int AnguloX, AnguloY, AnguloZ;
 void setup()
 {
   Serial.begin(9600);
+  Serial.flush();
 
   //Inicializa o servo motor
   servo.attach(8);
-  servo.write(90);
 
   Wire.begin();
   Wire.beginTransmission(MPU);
@@ -31,26 +37,36 @@ void setup()
   Wire.write(0); 
   Wire.endTransmission(true);
 }
-
+void serialEvent(){
+  char temp;
+  temp = Serial.read();
+  Serial.println(temp);
+  if (valorSerial == 'A'){
+    angulo = (int) temp;
+    valorSerial = 'c';
+  }else{
+    valorSerial = temp;
+  }
+  
+}
 void loop()
 {
-  while (Serial.available() > 0)
-  {
-    buf = Serial.read();
-    if (buf = 'A')
-    {
-      angulo = Serial.read();
+  if (angulo >= 0){
       servo.write(angulo);
-      Serial.write("ServoOk");
-    }else if(buf = 'B'){
-      Bussola = LerBussola();
-      //Envia por serial os valores da bussola
-      for (int i = 0; i < Bussola.length(); i++)
-      {
-        Serial.write(Bussola[i]);
-      }
+      angulo = -1;
+  }
+  /*
+  if(buf = 'B'){
+    Bussola = LerBussola();
+    //Envia por serial os valores da bussola
+    for (int i = 0; i < Bussola.length(); i++)
+    {
+      Serial.write(Bussola[i]);
+    }
+    
     }
   }
+  */
  }
 
  String LerBussola()
@@ -74,7 +90,7 @@ void loop()
   GyY	=	Wire.read()<<8|Wire.read();  //0x45 (GYRO_YOUT_H) & 0x46 (GYRO_YOUT_L)
   GyZ	=	Wire.read()<<8|Wire.read();  //0x47 (GYRO_ZOUT_H) & 0x48 (GYRO_ZOUT_L)
   */
-  
+    
   Temp = "X ";
   Temp.concat(AnguloX);
   
