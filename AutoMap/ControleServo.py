@@ -1,30 +1,39 @@
-from Tkinter import *
 import RPi.GPIO as GPIO
 import time
+import serial
+ 
+#Configura a serial e a velocidade de transmissao
+ser = serial.Serial("/dev/ttyS0", 9600, timeout=1)
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(22, GPIO.OUT)
-pwm = GPIO.PWM(22, 100)
-pwm.start(5)
+#GPIO.setmode(GPIO.BOARD)
+ 
+#Define o pino do botao como entrada
+#GPIO.setup(18, GPIO.IN)
+ 
+#Mensagem inicial
+#print ("Pressione o botao...")
 
-class App:
-	
-    def __init__(self, master):
-        frame = Frame(master)
-        frame.pack()
-        scale = Scale(frame, from_=0, to=180, 
-              orient=HORIZONTAL, command=self.update)
-        scale.grid(row=0)
-
-
-    def update(self, angle):
-        duty = float(angle) / 10.0 + 2.5
-        pwm.ChangeDutyCycle(duty)
 try:
-    root = Tk()
-    root.wm_title('Servo Control')
-    app = App(root)
-    root.geometry("200x50+0+0")
-    root.mainloop()
-finally:
-    GPIO.cleanup()
+     ser.close()
+     ser.open()
+     ser.flushInput()
+     ser.flushOutput()
+     while(1):
+          for a in range(180):
+               ser.write('A')
+               print("Enviando " + str(a))
+               ser.write(chr(a))
+               print("Enviado - " + str(a))
+               #time.sleep(0.05)
+               
+          for a in range(180):
+               ser.write('A')
+               print("Enviando " + str(180 - a))
+               ser.write(chr(180 - a))
+               print("Enviado - " + str(180 - a))
+               #time.sleep(0.05)
+          
+except:
+     print("passei no excep")
+     ser.close()
+     raise
