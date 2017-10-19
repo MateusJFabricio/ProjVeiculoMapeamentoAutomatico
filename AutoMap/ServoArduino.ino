@@ -1,8 +1,3 @@
-//Programa : Teste MPU6050 e LCD 20x4
-//Alteracoes e adaptacoes : FILIPEFLOP
-//
-//Baseado no programa original de JohnChi
-
 //Carrega a biblioteca Wire
 #include<Wire.h>
 #include <Servo.h> 
