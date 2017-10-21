@@ -23,7 +23,7 @@ char valorSerial;
 int AnguloX, AnguloY, AnguloZ;
 void setup()
 {
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.flush();
 
   //Inicializa o servo motor
@@ -42,7 +42,7 @@ void serialEvent(){
   temp = Serial.read();
   Serial.println(temp);
   if (valorSerial == 'A'){
-    angulo = (int) temp;
+    angulo = (byte) temp;
     valorSerial = 'c';
   }else{
     valorSerial = temp;
@@ -53,6 +53,7 @@ void loop()
 {
   if (angulo >= 0){
       servo.write(angulo);
+      Serial.print((int)angulo);
       angulo = -1;
   }
   /*
