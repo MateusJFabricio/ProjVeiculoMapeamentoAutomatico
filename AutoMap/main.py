@@ -1,7 +1,13 @@
+
 #controle do servo com os sensores
 
 import RPi.GPIO as GPIO
 import time
+import serial
+import turtle
+
+#Configura a serial e a velocidade de transmissao
+ser = serial.Serial("/dev/ttyS0", 115200, timeout=1)
 
 PWM_MOTOR_IO = 22
 TRIGGER_S1 = 17
@@ -9,8 +15,20 @@ ECHO_S1 = 27
 TRIGGER_S2 = 18
 ECHO_S2 = 23
 
+class TMapa:
+    def __init(self):
+        turtle.Screen()
+        turtle.speed(20)
+        #turtle.hideturtle()
 
-
+    def desenha(self, distancia, angulo):
+        turtle.speed(20)
+        turtle.penup()
+        turtle.home()
+        turtle.left(angulo)
+        turtle.pendown()
+        turtle.forward(distancia)
+        
 class TServoMotor:
     def __init__(self):
         GPIO.setmode(GPIO.BCM)
@@ -19,17 +37,14 @@ class TServoMotor:
         self.start()
 
     def posicionar(self, angulo):
-        duty = float(angulo) * 0.0333 + 4.5
-        print('O valor do duty: ' + str(duty))
-        if not (self.angulo == angulo):
-            self.pwm.ChangeDutyCycle(duty)
-            time.sleep(0.1)
-        #self.pwm.stop()
+        ser.write('A')
+        print("Enviando " + str(angulo))
+        ser.write(chr(angulo))
+        print("Enviado - " + str(angulo))
         self.angulo = angulo
 
     def start(self):
-        self.pwm.start(4.5)
-        self.angulo = 0
+        print("Instanciado Servo")
 
 class TSensorUSonico:
 
@@ -55,26 +70,38 @@ class TSensorUSonico:
         return (stop - start) * 17000
     
 try:
+    ser.close()
+    ser.open()
+    ser.flushInput()
+    ser.flushOutput()
+     
     servo = TServoMotor()
     sensor_dir = TSensorUSonico(TRIGGER_S1, ECHO_S1)
     sensor_esq = TSensorUSonico(TRIGGER_S2, ECHO_S2)
 
-    offset = 4
-    while(True):
+    mapa = TMapa()
+
+    offset = 1
+    
+    while(0):
         for angulo in range(0,180,offset):
             servo.posicionar(180 - angulo)
-            time.sleep(0.1)
-            print('No angulo' + str(servo.angulo))
-            print ('sensor da esqueda: '+ str(sensor_esq.medir()))
-            print ('sensor da direita: '+ str(sensor_dir.medir()))
-
+            #print('No angulo' + str(servo.angulo))
+            #print ('sensor da esqueda: '+ str(sensor_esq.medir()))
+            #print ('sensor da direita: '+ str(sensor_dir.medir()))
+            mapa.desenha(sensor_dir.medir(), servo.angulo)
+            mapa.desenha(sensor_esq.medir(), servo.angulo + 180)
+            
         for angulo in range(0,180,offset):
             servo.posicionar(angulo)
-            time.sleep(0.1)
-            print('No angulo' + str(servo.angulo))
-            print ('   sensor da esqueda: '+ str(sensor_esq.medir()))
-            print ('   sensor da direita: '+ str(sensor_dir.medir()))
+            #print('No angulo' + str(servo.angulo))
+            #print ('   sensor da esqueda: '+ str(sensor_esq.medir()))
+            #print ('   sensor da direita: '+ str(sensor_dir.medir()))
+            mapa.desenha(sensor_dir.medir(), servo.angulo)
+            mapa.desenha(sensor_esq.medir(), servo.angulo + 180)
+            
+        turtle.clearscreen()
         
 finally:
     GPIO.cleanup()
-
+    ser.close()
