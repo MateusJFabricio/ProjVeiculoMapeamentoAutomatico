@@ -279,16 +279,27 @@ class Application:
             
             for angulo in range(0,180,self.offset):
                 self.servo.posicionar(180 - angulo)
-                self.mapa.desenha(self.sensor_dir.medir(), self.servo.angulo)
-                self.mapa.desenha(self.sensor_esq.medir(), self.servo.angulo + 180)
+                self.desenha(self.sensor_dir.medir(), self.servo.angulo)
+                self.desenha(self.sensor_esq.medir(), self.servo.angulo + 180)
                     
             for angulo in range(0,180, self.offset):
                 self.servo.posicionar(angulo)
-                self.mapa.desenha(self.sensor_dir.medir(), self.servo.angulo)
-                self.mapa.desenha(self.sensor_esq.medir(), self.servo.angulo + 180)
+                self.desenha(self.sensor_dir.medir(), self.servo.angulo)
+                self.desenha(self.sensor_esq.medir(), self.servo.angulo + 180)
                 
         finally:
             ser.close()
+
+
+    def desenha(self, distancia, angulo):
+        self.mapa.speed(20)
+        self.mapa.penup()
+        self.mapa.home()
+        self.mapa.left(angulo)
+        self.mapa.pendown()
+        self.mapa.forward(distancia)
+      
+
 
 root = Tk()
 Application(root)
