@@ -185,6 +185,11 @@ class Application:
 
         self.meuAngulo = 0
 
+        self.posicaoFimR = [0,0]
+        self.posicaoIniR = [0,0]
+        self.posicaoFim = [0,0]
+        self.posicaoInit = [0,0]
+
     def cliqueBtnDireita(self, event):
         RD_pwm.ChangeDutyCycle(50)
         RE_pwm.ChangeDutyCycle(50)
@@ -275,12 +280,12 @@ class Application:
             self.sensor_dir = TSensorUSonico(TRIGGER_S1, ECHO_S1)
             self.sensor_esq = TSensorUSonico(TRIGGER_S2, ECHO_S2)
 
-            self.offset = 1
+            self.offset = 5
             
             for angulo in range(0,180,self.offset):
                 self.servo.posicionar(180 - angulo)
-                self.desenha(self.sensor_dir.medir(), self.servo.angulo)
-                self.desenha(self.sensor_esq.medir(), self.servo.angulo + 180)
+                self.desenhaLeft(self.sensor_dir.medir(), self.servo.angulo)
+                self.desenhaRight(self.sensor_esq.medir(), self.servo.angulo + 180)
                     
             for angulo in range(0,180, self.offset):
                 self.servo.posicionar(angulo)
@@ -290,15 +295,37 @@ class Application:
         finally:
             ser.close()
 
-
-    def desenha(self, distancia, angulo):
-        self.mapa.speed(20)
+    
+    def desenhaLeft(self, distancia, angulo):
+        self.mapa.penup()
+        self.mapa.goto(self.posicaoFimR[0], self.posicaoFimR[1])
+        self.posicaoInitR = self.mapa.position()
+        self.mapa.speed(2)
+        self.mapa.hideturtle()
         self.mapa.penup()
         self.mapa.home()
         self.mapa.left(angulo)
-        self.mapa.pendown()
         self.mapa.forward(distancia)
-      
+        self.mapa.pendown()
+        self.posicaoFimR = self.mapa.position()
+        self.mapa.goto(self.posicaoInitR[0], self.posicaoInitR[1])
+        self.mapa.goto(self.posicaoFimR[0], self.posicaoFimR[1])
+
+    def desenhaRight(self, distancia, angulo):
+        self.mapa.penup()
+        self.mapa.goto(self.posicaoFim[0], self.posicaoFim[1])
+        self.posicaoInit = self.mapa.position()
+        self.mapa.penup()
+        self.mapa.speed(2)
+        self.mapa.hideturtle() 
+        self.mapa.home()
+        self.mapa.left(angulo)
+        self.mapa.forward(distancia)
+        self.mapa.pendown()
+        self.posicaoFim = self.mapa.position()
+        self.mapa.goto(self.posicaoInit[0], self.posicaoInit[1])
+        self.mapa.goto(self.posicaoFim[0], self.posicaoFim[1])
+        
 
 
 root = Tk()
