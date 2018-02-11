@@ -67,7 +67,7 @@ Motor DC - CI - L293D
         Output 1 [Pino 3] - Saida para o Motor 1
         Output 2 [Pino 6] - Saida para o Motor 1
 
-      Relativo à alimentação do motor 1
+      Relativo à alimentação do motor 2
         GND [Pino 13] - Ground Motor1
         GND [Pino 12] - Ground Motor1
         Output 3 [Pino 11] - Saida para o Motor 2
